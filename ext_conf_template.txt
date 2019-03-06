@@ -1,0 +1,2 @@
+  # cat=basic; type=text; label=Remote URL for checking and Downloading files, that are not present in your local file system
+remoteBaseUrl =

@@ -1,0 +1,52 @@
+{
+    "name": "tj/tj-devtools",
+    "description": "Some useful TYPO3 DevTool",
+    "homepage": "https://team23.de",
+    "license": ["GPL-2.0+"],
+    "type": "typo3-cms-extension",
+    "keywords": [
+        "Development",
+        "Tools",
+        "Utility"
+     ],
+    "require": {
+        "typo3/cms-core": "^8.7.10 || ^9.5.0"
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor"
+    },
+    "replace": {
+        "tj-devtools": "self.version",
+        "typo3-ter/tj-devtools": "self.version"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "tj_devtools",
+            "web-dir": ".Build/public"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "TheJotob\\TJDevtools\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TheJotob\\TJDevtools\\Tests\\" : "Tests/"
+        }
+    },
+    "scripts": {
+        "ts:lint": "typoscript-lint -c Configuration/TsLint.yml --ansi -n --fail-on-warnings -vvv Configuration/TypoScript/",
+        "php:lint": ".Build/vendor/bin/php-cs-fixer fix --diff --dry-run --config .php_cs",
+        "php:fix": ".Build/vendor/bin/php-cs-fixer fix --diff --config .php_cs",
+        "link-extension": [
+            "@php -r 'is_dir($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/\") || mkdir($extFolder, 0777, true);'",
+            "@php -r 'file_exists($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/t23_viewhelpers\") || symlink(__DIR__,$extFolder);'"
+        ],
+        "tests:unit": "@php .Build/vendor/bin/phpunit -c Tests/UnitTests.xml",
+        "tests": [
+            "@tests:unit"
+        ],
+        "unlink-extension": "@php -r 'is_link($dir=__DIR__.\"/.Build/public/typo3conf/ext/t23_viewhelpers\") && unlink($dir);'"
+    }
+}
